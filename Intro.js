@@ -58,7 +58,7 @@ function testCorrect(answer, key) {
 
 function pickWordOrPhrase() { //Text generator for mode 2
     var words = ["Hello", "World", "Puppy", "Alphabet", "Chemistry", "Beach", "Kitten", "Teacher", "School", "Fox", "Blue", "Color", "Sky", "Lake", "Skateboard", "Whisper", "President", "Government", "Whom", "No", "Thanks", "Cold", "Weather", "Please", "Math", "Example", "Measure", "Friend", "Country", "Picture", "Women", "Men", "Elephant", "Water", "People", "Dragon", "Animal", "Lunch", "Basket", "Owl", "Nowhere", "Ladder", "Orange", "Blue", "Green", "Blue", "Yellow", "Birthday", "Present", "Letter", "Pencil", "Paper"];
-    var phrases = ["Thank you", "Good luck", "What is your name", "Once in a blue moon", "Never say never", "Where is the library"];
+    var phrases = ["Thank you", "Good luck", "What is your name", "Once in a blue moon", "Never say never", "Where is the library", "See you later", "How are you doing", "Best of both worlds", "Happy birthday to you", "My favorite color is red"];
     var wordorphrase = (Math.random() * 2);
     if (wordorphrase <= 1) {
         checkWordOrPhrase = "word";
