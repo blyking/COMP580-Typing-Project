@@ -137,10 +137,10 @@ function CheckMode1(type, answer) {
         //test.textContent = type;
         return(true);
     } else {
+        say("Incorrect!");
         if (answer.length > 1) {
             say("You have typed more than 1 letter or number. Please only type 1.")
         }
-        say("Incorrect!");
         // test variable currently not working
         //test.textContent = type;
         if (TopRowKeyboard.indexOf(type) !== -1) {
