@@ -37,6 +37,13 @@ if (document.activeElement.nodeName = 'TEXTAREA') {
 document.getElementById(mode.id).focus();
 document.getElementById(mode.id).select();
 
+if (mode.focus) {
+    if (hasClicked == false) {
+        say("To learn the keys and locations, type 1 (second from left, second from top) in the first box below. To test your knowledge by typing out words and phrases, hit 2 (third from left, second from top) in the first box below. To go to test mode, where you will type out full sentences with no hints, hit 3 (fourth from left, second from top). For more information on the game, please type 4 (second from top, fifth from left). The mode can be changed at any time by changing the number in the top box, which can be returned to by selecting the up arrow key (located in lower right area of keyboard) while in modes 1, 2, and 3. The up arrow is situated differently for many keyboard models, so ask an adult or friend for help if needed.")
+        hasClicked = true;
+    }
+}
+
 function say(text) { //taken from gbishop runner example game
     var msg = new SpeechSynthesisUtterance(text);
     window.speechSynthesis.speak(msg);
@@ -125,11 +132,14 @@ function CheckMode1(type, answer) {
     //console.log("String(type) = " + String(type) + ", String(answer) = " + String(answer) + ", String(answer[0]) = " + String(answer[0]));
     //console.log((type == answer[0]).toString());
     const deletePrompt = "Press backspace, located far right, second from top to clear your answer. Now try again.";
-    if (type == answer[0]) {
+    if (type == answer) {
         /* Ths line below this doesn't work, so I commented it out */
         //test.textContent = type;
         return(true);
     } else {
+        if (answer.length > 1) {
+            say("You have typed more than 1 letter or number. Please only type 1.")
+        }
         say("Incorrect!");
         // test variable currently not working
         //test.textContent = type;
