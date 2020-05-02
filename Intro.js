@@ -46,6 +46,9 @@ if (mode.focus) {
 
 function say(text) { //taken from gbishop runner example game
     var msg = new SpeechSynthesisUtterance(text);
+    if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+    }
     window.speechSynthesis.speak(msg);
 }
 
@@ -106,7 +109,7 @@ mode.addEventListener("keyup", () => {
         //Test mode: practice typing words and sentences
         heading.textContent = "Practice Mode"; //2 = practice mode, set heading
         description.textContent = "You have selected practice mode. Type the word or phrase spoken in lower-case letters. Hit enter (far right, fourth from top) to submit.";
-        say("Type the word or phrase spoken in lower-case letters. Hit enter (far right, fourth from top) to submit.");
+        say("You have selected practice mode. Type the word or phrase spoken in lower-case letters. Hit enter (far right, fourth from top) to submit.");
         say("I will now begin reading off words and phrases for you to type.");
         const txt = pickWordOrPhrase();
         say(txt);
@@ -114,7 +117,7 @@ mode.addEventListener("keyup", () => {
     } else if (m == 3) {
         heading.textContent = "Test Mode"; //3 = test mode, set heading
         description.textContent = "You have selected test mode. Type the sentence spoken in lower-case letters. Hit enter (far right, fourth from top) to submit.";
-        say("Type the sentence spoken in lower-case letters. Hit enter (far right, fourth from top) to submit.");
+        say("You have selected test mode. Type the sentence spoken in lower-case letters. Hit enter (far right, fourth from top) to submit.");
         say("I will now begin reading off sentences for you to type.");
         const txt = pickSentence();
         say(txt);
@@ -377,6 +380,7 @@ input.addEventListener("keyup", () => {
                 say("Correct! I will now reset the textbox and read out a new letter.")
                 input.value = "";
                 const txt = pickSentence();
+                type.textContent = txt;
                 say(txt);
             }
         }
