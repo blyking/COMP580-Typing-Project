@@ -27,9 +27,11 @@ const numArray = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seven
 
 let checkWordOrPhrase = "";
 
+var moveForward = true;
+
 if (document.activeElement.nodeName = 'TEXTAREA') {
     if (hasClicked == false) {
-        say("To learn the keys and locations, type 1 (second from left, second from top) in the first box below. To test your knowledge by typing out words and phrases, hit 2 (third from left, second from top) in the first box below. To go to test mode, where you will type out full sentences with no hints, hit 3 (fourth from left, second from top). For more information on the game, please type 4 (second from top, fifth from left). The mode can be changed at any time by changing the number in the top box, which can be returned to by selecting the up arrow key (located in lower right area of keyboard) while in modes 1, 2, and 3. The up arrow is situated differently for many keyboard models, so ask an adult or friend for help if needed.")
+        say("yay! To learn the keys and locations, type 1 (second from left, second from top) in the first box below. To test your knowledge by typing out words and phrases, hit 2 (third from left, second from top) in the first box below. To go to test mode, where you will type out full sentences with no hints, hit 3 (fourth from left, second from top). For more information on the game, please type 4 (second from top, fifth from left). The mode can be changed at any time by changing the number in the top box, which can be returned to by selecting the up arrow key (located in lower right area of keyboard) while in modes 1, 2, and 3. The up arrow is situated differently for many keyboard models, so ask an adult or friend for help if needed.")
         hasClicked = true;
     }
 }
@@ -39,23 +41,29 @@ document.getElementById(mode.id).select();
 
 if (mode.focus) {
     if (hasClicked == false) {
-        say("To learn the keys and locations, type 1 (second from left, second from top) in the first box below. To test your knowledge by typing out words and phrases, hit 2 (third from left, second from top) in the first box below. To go to test mode, where you will type out full sentences with no hints, hit 3 (fourth from left, second from top). For more information on the game, please type 4 (second from top, fifth from left). The mode can be changed at any time by changing the number in the top box, which can be returned to by selecting the up arrow key (located in lower right area of keyboard) while in modes 1, 2, and 3. The up arrow is situated differently for many keyboard models, so ask an adult or friend for help if needed.")
+        say("Yay! To learn the keys and locations, type 1 (second from left, second from top) in the first box below. To test your knowledge by typing out words and phrases, hit 2 (third from left, second from top) in the first box below. To go to test mode, where you will type out full sentences with no hints, hit 3 (fourth from left, second from top). For more information on the game, please type 4 (second from top, fifth from left). The mode can be changed at any time by changing the number in the top box, which can be returned to by selecting the up arrow key (located in lower right area of keyboard) while in modes 1, 2, and 3. The up arrow is situated differently for many keyboard models, so ask an adult or friend for help if needed.")
         hasClicked = true;
     }
 }
 
 function say(text) { //taken from gbishop runner example game
     var msg = new SpeechSynthesisUtterance(text);
-    if (window.speechSynthesis.speaking) {
-        window.speechSynthesis.cancel();
+    if (moveForward == true) {
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel()
+      }
     }
     window.speechSynthesis.speak(msg);
 }
 
 function pickLetter() { //Text generator for mode 1
-    var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 '
+    var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789'
     const index = Math.floor(Math.random() * (alphabet.length-1))
-    return alphabet[index].toLowerCase()
+    if (index == 26) {
+        return "[Space]";
+    } else { 
+        return alphabet[index].toLowerCase();
+    }
 }
 
 function testCorrect(answer, key) {
@@ -96,11 +104,12 @@ mode.addEventListener("keyup", () => {
         heading.textContent = "Tutorial Mode"; //1 = tutorial mode, set heading
         description.textContent = "Type the letter spoken in lower-case. Hit enter (far right, fourth from top) to submit.";
         say("You have selected Tutorial Mode. Type the letter spoken in lower-case. Hit enter (far right, fourth from top) to submit.")
+        moveForward = false;
         say("I will now begin reading off letters for you to type.")
         const txt = pickLetter();
-        if (txt == " ") {
-            say("Space")
-            type.textContent = "[Space]"
+        if (txt == "[Space]") {
+            say("Space");
+            type.textContent = "[Space]";
         } else {
             say(txt);
             type.textContent = txt;
@@ -110,6 +119,7 @@ mode.addEventListener("keyup", () => {
         heading.textContent = "Practice Mode"; //2 = practice mode, set heading
         description.textContent = "You have selected practice mode. Type the word or phrase spoken in lower-case letters. Hit enter (far right, fourth from top) to submit.";
         say("You have selected practice mode. Type the word or phrase spoken in lower-case letters. Hit enter (far right, fourth from top) to submit.");
+        moveForward = false;
         say("I will now begin reading off words and phrases for you to type.");
         const txt = pickWordOrPhrase();
         say(txt);
@@ -118,23 +128,29 @@ mode.addEventListener("keyup", () => {
         heading.textContent = "Test Mode"; //3 = test mode, set heading
         description.textContent = "You have selected test mode. Type the sentence spoken in lower-case letters. Hit enter (far right, fourth from top) to submit.";
         say("You have selected test mode. Type the sentence spoken in lower-case letters. Hit enter (far right, fourth from top) to submit.");
+        moveForward = false;
         say("I will now begin reading off sentences for you to type.");
         const txt = pickSentence();
         say(txt);
         type.textContent = txt;
     } else if (m == 4) {
+        moveForward = true;
         say("Welcome to Tarheel Typing! This game is designed to help you learn the numerical and alphabetical key locations on your keyboard. Please start with the tutorial mode (mode 1) until you are completely comfortable with the locations of the keys. After that, we recommend practicing on practice mode (mode 2) before progressing to the test mode (mode 3). Our program will read out the last letter typed to help you know what keys you are pressing, and when you hit backspace, the new last letter of your answer will be read out loud. For further instructions and information, please refer to the README.")
     } else {
-        heading.textContent = "Invalid mode! Please type 1 or 2."; //can only type 1 or 2, set heading
+        heading.textContent = "Invalid mode! Please type 1, 2, 3, or 4."; //can only type 1 or 2, set heading
         description.textContent = "Game will not begin until a valid mode is selected."
-        say("Game will not begin until a valid mode is selected.")
+        say("Game will not begin until a valid mode is selected. Please type 1, 2, 3, or 4.")
     }
 });
 
 function CheckMode1(type, answer) {
     //console.log("String(type) = " + String(type) + ", String(answer) = " + String(answer) + ", String(answer[0]) = " + String(answer[0]));
     //console.log((type == answer[0]).toString());
+    moveForward = false;
     const deletePrompt = "Press backspace, located far right, second from top to clear your answer. Now try again.";
+    if (type == "[Space]") {
+      type = " ";
+    }
     if (type == answer) {
         /* Ths line below this doesn't work, so I commented it out */
         //test.textContent = type;
@@ -166,6 +182,8 @@ function CheckMode1(type, answer) {
             say("Is on the second to top row of most keyboards.");
             say("This row, from left to right, is tilde, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, minus, equals, backspace.");
             say(deletePrompt);
+        } else if (type == " ") {
+            say("Space is the long horizontal key at the bottom middle of the keyboard.");
         }
         return(false);
     }
@@ -223,7 +241,6 @@ function IndexOfSingleError(type, answer) {
 
 function findSpaceIndexes(string) {
     let phraseSpaceIndexes = [];
-    test.textContent = "The function is being reached";
     let j = 0;
     for (i = 0; i <= string.length-1; i++) {                                //fills out phraseSpaceIndexes array 1 by 1 with indexes of where spaces are located.
         if(string[i] == " "){
@@ -254,12 +271,12 @@ function findLetterIndex(phraseSpaceIndexes, wordIndex, index) {
         letterIndex = index;
     } else {
         letterIndex = index - (phraseSpaceIndexes[wordIndex-1] + 1);    //phraseSpaceIndexes[wordIndex-1] + 1 gets the index of the beginning of the word that was incorrect and is 
-        test.textContent = index;
     }
     return letterIndex;
 }
 
 function CheckMode2(type, answer){
+    moveForward = false;
     if (type == answer) {
         return(true);
     } else {
@@ -268,9 +285,17 @@ function CheckMode2(type, answer){
         if (diff == 1) {
             const index = IndexOfSingleError(type, answer);
             say("You made one error. You typed");
-            say(answer[index]);
+            if (answer[index] == " ") {
+                say("Space");
+            } else {
+                say(answer[index]);
+            }
             say("instead of");
-            say(type[index]);
+            if (type[index] == " ") {
+                say("Space")
+            } else {
+                say(type[index]);
+            }
             if(checkWordOrPhrase == "word"){
                 say("at the" + numArray[index] + "letter of the word.");
             }else if(checkWordOrPhrase == "phrase"){
@@ -296,6 +321,7 @@ function CheckMode2(type, answer){
 }
 
 function CheckMode3(type, answer) {
+    moveForward = false;
     if (type == answer) {
         return true;
     } else {
@@ -310,7 +336,11 @@ function CheckMode3(type, answer) {
 
             say("You made one error.")
             say("You typed")
-            say(answer[index])
+            if (answer[index] == " ") {
+                say("Space");
+            } else {
+                say(answer[index])
+            }
             say("instead of")
             say(type[index]);
             say(`on the${numArray[wordIndex]}word of the phrase, ${numArray[letterIndex]}of the word.`)
@@ -326,6 +356,7 @@ function CheckMode3(type, answer) {
                     say(type[i]);
                 }
             }
+            say("I will now spell out your new answer.");
         }
         return false;
     }
@@ -341,18 +372,29 @@ input.addEventListener("keyup", () => {
     if (event.key == "ArrowUp") {
         document.getElementById(mode.id).focus();
         document.getElementById(mode.id).select();
+        input.value = "";
+        type.textContent = "";
+        moveForward = true;
+        heading.textContent = "Please select a valid mode.";
+        description.textContent = "You will return back to the answer textbox once you have done so.";
         say("You have returned to the mode selection text box. Please type 1, 2, 3, or 4.");
     }
     if (event.key !== "Enter" && event.key !== "ArrowUp") {
-        if (answer[answer.length - 1] === " ") {
+        moveForward = false;
+        if (event.key === " ") {
             say("Space");
         } else {
-            say(answer[answer.length - 1]);
+            say(event.key);
         }
+    }
+
+    if (event.key === "Backspace") {
+        say(answer[answer.length - 1]);
     }
 
     if (m == 1 && answer.length > 0) {
         if (event.key === "Enter") {
+            moveForward = false;
             const Correct = CheckMode1(k, answer);
             if (Correct == true) {
                 say("Correct! I will now reset the textbox and read out a new letter.");
@@ -364,6 +406,7 @@ input.addEventListener("keyup", () => {
         }
     } else if (m == 2 && answer.length > 0) {
         if (event.key == "Enter") {
+            moveForward = false;
             const correct = CheckMode2(k, answer);
             if (correct == true) {
                 say("Correct! I will now reset the textbox and read out a new letter.")
@@ -375,6 +418,7 @@ input.addEventListener("keyup", () => {
         }
     } else if (m == 3 && answer.length > 0) {
         if (event.key == "Enter") {
+            moveForward = false;
             const correct = CheckMode3(k, answer);
             if (correct == true) {
                 say("Correct! I will now reset the textbox and read out a new letter.")
