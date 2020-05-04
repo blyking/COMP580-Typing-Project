@@ -33,6 +33,7 @@ If an educator, parent, or student would like to inject their own words, phrases
 i. Words: line 78 (var words = [...])
 ii. Phrases: line 79 (var phrases = [...])
 iii. Sentences: line 91 (var sentences = [...])
+
 4. Save the .js file and close the editor
 5. Open the index.html file in a browser (Preferably Google Chrome)
 
