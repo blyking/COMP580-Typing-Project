@@ -23,4 +23,16 @@ This game was coded using CSS, HTML5, and JavaScript, with the base of the game 
 
 How to Build and Deploy It
 
-The most straight-forward way for users to deploy the game is to visit blyking.github.io, as the game is posted there. However, if a user wants to have the game locally on their computer, they could download the .css, .html, and .js files onto their computer into the same folder and click on the .html file.
+The most straight-forward way for users to deploy the game is to visit blyking.github.io, as the game is posted there. However, if a user wants to have the game locally on their computer, they could download the .css, .html, and .js files onto their computer into the same folder and click on the .html file in their file explorer. 
+
+If an educator, parent, or student would like to inject their own words, phrases, or sentences into the game, here are the steps needed to do so:
+1. Download the entire repo into a folder on your computer
+2. Open Intro.js in a code editor, such as Visual Studio Code
+3. Add, edit, or replace any of the following:
+
+i. Words: line 78 (var words = [...])
+ii. Phrases: line 79 (var phrases = [...])
+iii. Sentences: line 91 (var sentences = [...])
+4. Save the .js file and close the editor
+5. Open the index.html file in a browser (Preferably Google Chrome)
+
