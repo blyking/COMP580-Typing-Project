@@ -1,5 +1,7 @@
 Welcome to Tarheel Typing!
 
+Collaborators: Blythe King, Jordan Van Glish, David Chang
+
 Link to game: https://blyking.github.io/
 
 Once on the game website, use the first textbox to choose a game mode. To do so, type either (without quotation marks):  
