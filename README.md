@@ -22,9 +22,12 @@ If an educator, parent, or student would like to inject their own words, phrases
 1. Download the entire repo into a folder on your computer
 2. Open Intro.js in a code editor, such as Visual Studio Code
 3. Add, edit, or replace any of the following:
-        3a.  Words: line 78 (var words = [...])
-        3b. Phrases: line 79 (var phrases = [...])
-        3c. Sentences: line 91 (var sentences = [...])
+        
+        i.  Words: line 78 (var words = [...])
+        
+        ii. Phrases: line 79 (var phrases = [...])
+        
+        iii. Sentences: line 91 (var sentences = [...])
 4. Save the .js file and close the editor
 5. Open the index.html file in a browser (Preferably Google Chrome)
 
